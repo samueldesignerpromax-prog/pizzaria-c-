@@ -1,0 +1,105 @@
+@model PizzariaWeb.Models.Produto
+
+@{
+    ViewData["Title"] = $"{Model.Nome} - Pizzaria Delícia";
+}
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="text-center">
+                <i class="fas fa-pizza-slice fa-8x text-danger"></i>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1>@Model.Nome</h1>
+            <p class="lead">@Model.Descricao</p>
+            <hr>
+            <h5>Ingredientes:</h5>
+            <p>@Model.Ingredientes</p>
+            
+            <h5 class="mt-4">Escolha o tamanho:</h5>
+            
+            <form asp-controller="Carrinho" asp-action="Adicionar" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="nome" value="@Model.Nome" />
+                
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="card text-center size-card" onclick="selectSize('Pequena', @Model.PrecoPequena)">
+                            <div class="card-body">
+                                <h5>Pequena</h5>
+                                <p class="h4 text-primary">@Model.PrecoPequena.ToString("C")</p>
+                                <small>4 fatias</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center size-card" onclick="selectSize('Média', @Model.PrecoMedia)">
+                            <div class="card-body">
+                                <h5>Média</h5>
+                                <p class="h4 text-primary">@Model.PrecoMedia.ToString("C")</p>
+                                <small>6 fatias</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center size-card" onclick="selectSize('Grande', @Model.PrecoGrande)">
+                            <div class="card-body">
+                                <h5>Grande</h5>
+                                <p class="h4 text-primary">@Model.PrecoGrande.ToString("C")</p>
+                                <small>8 fatias</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <input type="hidden" name="tamanho" id="selectedSize" required />
+                <input type="hidden" name="preco" id="selectedPrice" required />
+                
+                <div class="mt-4">
+                    <label for="quantidade" class="form-label">Quantidade:</label>
+                    <input type="number" name="quantidade" id="quantidade" class="form-control" style="width: 100px;" value="1" min="1" />
+                </div>
+                
+                <div class="mt-3">
+                    <label for="observacao" class="form-label">Observações (opcional):</label>
+                    <textarea name="observacao" class="form-control" rows="2" placeholder="Ex: sem cebola, borda recheada..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-danger btn-lg mt-4 w-100">
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectSize(size, price) {
+        document.getElementById('selectedSize').value = size;
+        document.getElementById('selectedPrice').value = price;
+        
+        // Highlight selected card
+        document.querySelectorAll('.size-card').forEach(card => {
+            card.classList.remove('border-danger', 'border-3');
+        });
+        event.currentTarget.classList.add('border-danger', 'border-3');
+    }
+</script>
+
+<style>
+    .size-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .size-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .border-danger {
+        border: 2px solid #e74c3c !important;
+    }
+</style>
