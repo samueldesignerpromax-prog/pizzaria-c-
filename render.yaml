@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: pizzaria-web
+    runtime: image
+    repo: https://github.com/seu-usuario/pizzaria-web
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: pizzaria-db
+          property: connectionString
+
+  - type: pgsql
+    name: pizzaria-db
+    plan: free
+    databaseName: pizzaria
+    postgresMajorVersion: 15
