@@ -1,0 +1,90 @@
+@model List<PizzariaWeb.Models.Produto>
+
+@{
+    ViewData["Title"] = "Pizzaria Delícia - As melhores pizzas da cidade";
+}
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        color: white;
+        padding: 80px 0;
+    }
+    
+    .pizza-card {
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .pizza-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .btn-pizza {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+    }
+    
+    .btn-pizza:hover {
+        background-color: #c0392b;
+        color: white;
+    }
+</style>
+
+<div class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Pizzaria Delícia</h1>
+        <p class="lead">As pizzas mais saborosas da cidade, feitas com ingredientes frescos e amor</p>
+        <a href="/Produtos" class="btn btn-light btn-lg mt-3">Ver Cardápio</a>
+        <a href="/Pedido/Checkout" class="btn btn-outline-light btn-lg mt-3 ms-2">Faça seu Pedido</a>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-5">Pizzas em Destaque</h2>
+    <div class="row">
+        @foreach (var pizza in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card pizza-card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-pizza-slice fa-3x text-danger mb-3"></i>
+                        <h5 class="card-title">@pizza.Nome</h5>
+                        <p class="card-text small">@pizza.Descricao</p>
+                        <p class="text-primary fw-bold">A partir de @pizza.PrecoPequena.ToString("C")</p>
+                        <a href="/Produtos/Detalhes/@pizza.Id" class="btn btn-pizza">Ver Detalhes</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <i class="fas fa-motorcycle fa-3x text-danger mb-3"></i>
+                <h5>Entrega Rápida</h5>
+                <p>Entregamos em até 40 minutos</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <i class="fas fa-temperature-high fa-3x text-danger mb-3"></i>
+                <h5>Sempre Quente</h5>
+                <p>Pizza quentinha na sua casa</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <i class="fas fa-leaf fa-3x text-danger mb-3"></i>
+                <h5>Ingredientes Frescos</h5>
+                <p>Selecionados diariamente</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <i class="fas fa-credit-card fa-3x text-danger mb-3"></i>
+                <h5>Várias Formas de Pagamento</h5>
+                <p>Dinheiro, cartão, PIX</p>
+            </div>
+        </div>
+    </div>
+</div>
